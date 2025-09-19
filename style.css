@@ -1,0 +1,11 @@
+.sidebar {
+    width: 280px;
+    height: 100vh;
+}
+.content {
+    width: calc(100% - 280px);
+}
+pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
