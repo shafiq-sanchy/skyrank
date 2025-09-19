@@ -17,13 +17,15 @@ const app = createApp({
             metaInput: '',
             metaOutput: '',
             loading: false,
-            firebaseConfig: {
-                apiKey: "AIzaSyBOyALLQ2b0ridPyJarUoZOtT1PerCc_ZA",
-                authDomain: "skyrank-67ed0.firebaseapp.com",
-                projectId: "skyrank-67ed0",
-                storageBucket: "skyrank-67ed0.firebasestorage.app",
-                messagingSenderId: "89249908989",
-                appId: "1:89249908989:web:a0f5d6df2d6bdb2a91d694"
+            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+            const firebaseConfig = {
+              apiKey: "AIzaSyBOyALLQ2b0ridPyJarUoZOtT1PerCc_ZA",
+              authDomain: "skyrank-67ed0.firebaseapp.com",
+              projectId: "skyrank-67ed0",
+              storageBucket: "skyrank-67ed0.firebasestorage.app",
+              messagingSenderId: "89249908989",
+              appId: "1:89249908989:web:a0f5d6df2d6bdb2a91d694",
+              measurementId: "G-49C0WE75CD"
             },
             auth: null
         };
