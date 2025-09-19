@@ -12,14 +12,63 @@
 <body>
     <div id="app">
         <!-- Login/Register Section (Initially Visible) -->
-        <div v-if="!user.loggedIn" class="container mt-5">
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <h2 class="text-center mb-4">Login to Your Account</h2>
-                    <!-- Login Form Here -->
+        <!-- Login/Register Section (Initially Visible) -->
+<div v-if="!user.loggedIn" class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <!-- Registration Form -->
+            <div v-if="!isLoginView">
+                <h2 class="text-center mb-4">Create Your Account</h2>
+                <div class="mb-3">
+                    <input type="email" class="form-control" placeholder="Email" v-model="regEmail">
                 </div>
+                <div class="mb-3">
+                    <input type="password" class="form-control" placeholder="Password" v-model="regPassword">
+                </div>
+                <button class="btn btn-primary w-100" @click="registerUser">Register</button>
+                <p class="text-center mt-3">
+                    Already have an account? <a href="#" @click.prevent="isLoginView = true">Login here</a>
+                </p>
+            </div>
+
+            <!-- Login Form -->
+            <div v-if="isLoginView">
+                <h2 class="text-center mb-4">Login to Your Account</h2>
+                <div class="mb-3">
+                    <input type="email" class="form-control" placeholder="Email" v-model="loginEmail">
+                </div>
+                <div class="mb-3">
+                    <input type="password" class="form-control" placeholder="Password" v-model="loginPassword">
+                </div>
+                <button class="btn btn-success w-100" @click="loginUser">Login</button>
+                <p class="text-center mt-3">
+                    Don't have an account? <a href="#" @click.prevent="isLoginView = false">Register here</a>
+                </p>
             </div>
         </div>
+    </div>
+</div>
+
+<!-- Main Dashboard (Visible After Login) -->
+<div v-if="user.loggedIn" class="d-flex">
+    <!-- Sidebar -->
+    <div class="sidebar bg-light border-right p-3 d-flex flex-column">
+        <div>
+            <h4 class="mb-4">SEO Tools</h4>
+            <div class="list-group list-group-flush">
+                <a href="#" class="list-group-item list-group-item-action" :class="{ 'active': activeTool === 'meta-enhancement' }" @click="activeTool='meta-enhancement'">Meta Tag Enhancement</a>
+                <!-- Add other tools here later -->
+            </div>
+        </div>
+        <div class="mt-auto">
+            <p class="small text-muted mb-1">{{ user.data ? user.data.email : '' }}</p>
+            <button class="btn btn-danger w-100" @click="logoutUser">Logout</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content p-4">
+        <!-- ... the rest of your main content area ... -->
 
         <!-- Main Dashboard (Visible After Login) -->
         <div v-if="user.loggedIn" class="d-flex">
