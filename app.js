@@ -3,7 +3,7 @@ const { createApp } = Vue;
 const app = createApp({
     data() {
         return {
-            isAppLoaded: false, // <-- ১. এই নতুন লাইনটি যোগ করা হয়েছে
+            isAppLoaded: false,
             user: {
                 loggedIn: false,
                 data: null
@@ -16,16 +16,14 @@ const app = createApp({
             activeTool: 'meta-enhancement',
             metaInput: '',
             metaOutput: '',
-            loading: false,
-            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-            const firebaseConfig = {
-              apiKey: "AIzaSyBOyALLQ2b0ridPyJarUoZOtT1PerCc_ZA",
-              authDomain: "skyrank-67ed0.firebaseapp.com",
-              projectId: "skyrank-67ed0",
-              storageBucket: "skyrank-67ed0.firebasestorage.app",
-              messagingSenderId: "89249908989",
-              appId: "1:89249908989:web:a0f5d6df2d6bdb2a91d694",
-              measurementId: "G-49C0WE75CD"
+            loading: false, // <-- খুব সম্ভবত এই লাইনের শেষে কমাটি অনুপস্থিত ছিল
+            firebaseConfig: {
+                apiKey: "AIzaSyBOyALLQ2b0ridPyJarUoZOtT1PerCc_ZA",
+                authDomain: "skyrank-67ed0.firebaseapp.com",
+                projectId: "skyrank-67ed0",
+                storageBucket: "skyrank-67ed0.firebasestorage.app",
+                messagingSenderId: "89249908989",
+                appId: "1:89249908989:web:a0f5d6df2d6bdb2a91d694"
             },
             auth: null
         };
@@ -45,10 +43,11 @@ const app = createApp({
                 this.user.data = null;
             }
             
-            // <-- ২. এই দুটি নতুন লাইন যোগ করা হয়েছে
             // After checking login state, hide loader and show app
             this.isAppLoaded = true;
-            document.getElementById('loading-indicator').style.display = 'none';
+            if (document.getElementById('loading-indicator')) {
+                document.getElementById('loading-indicator').style.display = 'none';
+            }
         });
     },
     methods: {
