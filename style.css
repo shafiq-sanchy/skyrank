@@ -1,11 +1,28 @@
+/* Make sure the app takes full height */
+html, body, #app {
+    height: 100%;
+}
+
+/* This v-cloak helps prevent a "flash" of unstyled content before Vue loads */
+[v-cloak] {
+    display: none;
+}
+
 .sidebar {
     width: 280px;
-    height: 100vh;
+    height: 100vh; /* Make sidebar full height */
+    flex-shrink: 0; /* Prevents sidebar from shrinking */
 }
+
 .content {
     width: calc(100% - 280px);
+    overflow-y: auto; /* Add scrollbar if content is long */
 }
+
 pre {
     white-space: pre-wrap;
     word-wrap: break-word;
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
 }
