@@ -17,15 +17,15 @@ const app = createApp({
             metaInput: '',
             metaOutput: '',
             loading: false,
+            // আপনার দেওয়া নতুন এবং সঠিক firebaseConfig এখানে যোগ করা হয়েছে
             firebaseConfig: {
-                // অনুগ্রহ করে নিশ্চিত করুন যে এই মানগুলো আপনার
-                // Firebase প্রজেক্ট সেটিংস থেকে হুবহু কপি করা হয়েছে
-                apiKey: "YOUR_API_KEY",
-                authDomain: "YOUR_AUTH_DOMAIN",
-                projectId: "YOUR_PROJECT_ID",
-                storageBucket: "YOUR_STORAGE_BUCKET",
-                messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-                appId: "YOUR_APP_ID"
+                apiKey: "AIzaSyBOyALLQ2b0ridPyJarUoZOtT1PerCc_ZA",
+                authDomain: "skyrank-67ed0.firebaseapp.com",
+                projectId: "skyrank-67ed0",
+                storageBucket: "skyrank-67ed0.firebasestorage.app",
+                messagingSenderId: "89249908989",
+                appId: "1:89249908989:web:a0f5d6df2d6bdb2a91d694",
+                measurementId: "G-49C0WE75CD"
             },
             auth: null
         };
@@ -74,7 +74,7 @@ const app = createApp({
                 console.log('User logged in:', userCredential.user);
             } catch (error) {
                 alert(`Login failed: ${error.message}`);
-                console.error('Firebase Login Error:', error); // More detailed log
+                console.error('Firebase Login Error:', error);
             }
         },
         async logoutUser() {
