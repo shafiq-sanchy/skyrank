@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeepSee SEO ToolKit</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Login/Register Section (Initially Visible) -->
+        <div v-if="!user.loggedIn" class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <h2 class="text-center mb-4">Login to Your Account</h2>
+                    <!-- Login Form Here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Dashboard (Visible After Login) -->
+        <div v-if="user.loggedIn" class="d-flex">
+            <!-- Sidebar -->
+            <div class="sidebar bg-light border-right p-3">
+                <h4 class="mb-4">SEO Tools</h4>
+                <div class="list-group list-group-flush">
+                    <a href="#" class="list-group-item list-group-item-action" @click="activeTool='meta-enhancement'">Meta Tag Enhancement</a>
+                    <!-- Add other tools here -->
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="content p-4">
+                <!-- Meta Tag Enhancement Tool UI -->
+                <div v-if="activeTool === 'meta-enhancement'">
+                    <h3>Meta Tag Enhancement</h3>
+                    <p>Rewrite meta title and description to boost CTR while keeping it keyword-rich.</p>
+                    <div class="mb-3">
+                        <textarea v-model="metaInput" class="form-control" rows="4" placeholder="Paste your current meta title and description here..."></textarea>
+                    </div>
+                    <button class="btn btn-primary" @click="generateMetaTags">Generate</button>
+                    
+                    <div v-if="loading" class="mt-4">
+                        <p>Loading...</p>
+                    </div>
+
+                    <div v-if="metaOutput" class="mt-4">
+                        <h4>Generated Suggestions:</h4>
+                        <pre class="bg-light p-3 rounded">{{ metaOutput }}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vue.js -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <!-- Custom JS -->
+    <script src="app.js"></script>
+</body>
+</html>
