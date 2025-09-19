@@ -16,24 +16,24 @@ const app = createApp({
             activeTool: 'meta-enhancement',
             metaInput: '',
             metaOutput: '',
-            loading: false, // <-- খুব সম্ভবত এই লাইনের শেষে কমাটি অনুপস্থিত ছিল
+            loading: false,
             firebaseConfig: {
-                apiKey: "AIzaSyBOyALLQ2b0ridPyJarUoZOtT1PerCc_ZA",
-                authDomain: "skyrank-67ed0.firebaseapp.com",
-                projectId: "skyrank-67ed0",
-                storageBucket: "skyrank-67ed0.firebasestorage.app",
-                messagingSenderId: "89249908989",
-                appId: "1:89249908989:web:a0f5d6df2d6bdb2a91d694"
+                // অনুগ্রহ করে নিশ্চিত করুন যে এই মানগুলো আপনার
+                // Firebase প্রজেক্ট সেটিংস থেকে হুবহু কপি করা হয়েছে
+                apiKey: "YOUR_API_KEY",
+                authDomain: "YOUR_AUTH_DOMAIN",
+                projectId: "YOUR_PROJECT_ID",
+                storageBucket: "YOUR_STORAGE_BUCKET",
+                messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+                appId: "YOUR_APP_ID"
             },
             auth: null
         };
     },
     mounted() {
-        // Initialize Firebase using the compat library
         firebase.initializeApp(this.firebaseConfig);
-        this.auth = firebase.auth(); // Use compat syntax
+        this.auth = firebase.auth();
 
-        // Check user login state
         this.auth.onAuthStateChanged(user => {
             if (user) {
                 this.user.loggedIn = true;
@@ -43,7 +43,6 @@ const app = createApp({
                 this.user.data = null;
             }
             
-            // After checking login state, hide loader and show app
             this.isAppLoaded = true;
             if (document.getElementById('loading-indicator')) {
                 document.getElementById('loading-indicator').style.display = 'none';
@@ -75,7 +74,7 @@ const app = createApp({
                 console.log('User logged in:', userCredential.user);
             } catch (error) {
                 alert(`Login failed: ${error.message}`);
-                console.error(error);
+                console.error('Firebase Login Error:', error); // More detailed log
             }
         },
         async logoutUser() {
@@ -101,7 +100,6 @@ const app = createApp({
 
             try {
                 const idToken = await this.auth.currentUser.getIdToken();
-
                 const response = await fetch('/.netlify/functions/generate-meta', {
                     method: 'POST',
                     headers: {
@@ -118,7 +116,6 @@ const app = createApp({
 
                 const data = await response.json();
                 this.metaOutput = data.result;
-
             } catch (error) {
                 console.error('Error:', error);
                 alert(`An error occurred: ${error.message}`);
