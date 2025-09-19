@@ -3,6 +3,7 @@ const { createApp } = Vue;
 const app = createApp({
     data() {
         return {
+            isAppLoaded: false, // <-- ১. এই নতুন লাইনটি যোগ করা হয়েছে
             user: {
                 loggedIn: false,
                 data: null
@@ -41,6 +42,11 @@ const app = createApp({
                 this.user.loggedIn = false;
                 this.user.data = null;
             }
+            
+            // <-- ২. এই দুটি নতুন লাইন যোগ করা হয়েছে
+            // After checking login state, hide loader and show app
+            this.isAppLoaded = true;
+            document.getElementById('loading-indicator').style.display = 'none';
         });
     },
     methods: {
