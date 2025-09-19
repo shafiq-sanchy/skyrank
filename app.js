@@ -80,36 +80,43 @@ const app = createApp({
                 console.error(error);
             }
         },
-        async generateMetaTags() {
-            if (!this.metaInput.trim()) {
-                alert('Please enter your current meta tags.');
-                return;
-            }
-            this.loading = true;
-            this.metaOutput = '';
+        // This method is inside the methods: { ... } object in app.js
+async generateMetaTags() {
+    if (!this.metaInput.trim()) {
+        alert('Please enter your current meta tags.');
+        return;
+    }
+    this.loading = true;
+    this.metaOutput = '';
 
-            try {
-                const response = await fetch('/.netlify/functions/generate-meta', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ text: this.metaInput })
-                });
+    try {
+        // Get the token of the logged-in user
+        const idToken = await this.auth.currentUser.getIdToken();
 
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.error || 'Failed to get a response from the server.');
-                }
+        const response = await fetch('/.netlify/functions/generate-meta', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${idToken}` // Send the token for verification
+            },
+            body: JSON.stringify({ text: this.metaInput })
+        });
 
-                const data = await response.json();
-                this.metaOutput = data.result;
-
-            } catch (error) {
-                console.error('Error:', error);
-                alert(`An error occurred: ${error.message}`);
-            } finally {
-                this.loading = false;
-            }
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Failed to get a response from the server.');
         }
+
+        const data = await response.json();
+        this.metaOutput = data.result;
+
+    } catch (error) {
+        console.error('Error:', error);
+        alert(`An error occurred: ${error.message}`);
+    } finally {
+        this.loading = false;
+    }
+}
     }
 });
 
