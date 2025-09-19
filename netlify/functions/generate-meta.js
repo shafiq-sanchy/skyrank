@@ -1,14 +1,40 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+const admin = require('firebase-admin');
+
+// Initialize Firebase Admin SDK
+// This uses the environment variable we set in Netlify
+try {
+    if (!admin.apps.length) {
+        admin.initializeApp({
+            credential: admin.credential.cert(JSON.parse(process.env.FIREBASE_ADMIN_SDK))
+        });
+    }
+} catch (e) {
+    console.error('Firebase admin initialization error', e.stack);
+}
 
 exports.handler = async function(event, context) {
     if (event.httpMethod !== 'POST') {
         return { statusCode: 405, body: 'Method Not Allowed' };
     }
 
+    // 1. Verify user token
+    const token = event.headers.authorization?.split('Bearer ')[1];
+    if (!token) {
+        return { statusCode: 401, body: JSON.stringify({ error: 'Unauthorized: No token provided.' }) };
+    }
+
+    try {
+        await admin.auth().verifyIdToken(token);
+    } catch (error) {
+        console.error('Token verification error:', error);
+        return { statusCode: 401, body: JSON.stringify({ error: 'Unauthorized: Invalid token.' }) };
+    }
+
+    // 2. If token is valid, proceed with the AI call
     try {
         const { text } = JSON.parse(event.body);
         
-        // Access your Google AI API key from environment variables
         const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
         const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
