@@ -10,7 +10,11 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="app">
+    <!-- Loading indicator -->
+    <div id="loading-indicator" class="text-center mt-5">
+        <h4>Loading your awesome SEO toolkit...</h4>
+    </div>    
+    <div id="app" v-cloak>
         <!-- Login/Register Section (Initially Visible) -->
         <div v-if="!user.loggedIn" class="container mt-5">
             <div class="row justify-content-center">
